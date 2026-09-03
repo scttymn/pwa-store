@@ -1,0 +1,16 @@
+<% content_for :title, "Install detection spike — PWA Store" %>
+
+<h1>Install detection spike</h1>
+<p>
+  Dumps <code>detectInstallContext()</code> for this browser.
+  Used to verify the vanilla module on devices. Not a designed UI.
+</p>
+
+<div data-controller="install-guide">
+  <h2>detectInstallContext()</h2>
+  <pre data-install-guide-target="output">loading…</pre>
+  <p>
+    <button type="button" data-action="install-guide#install">startInstallGuide()</button>
+  </p>
+  <div data-install-guide-target="panel"></div>
+</div>

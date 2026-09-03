@@ -1,0 +1,148 @@
+# Curated v1 catalog. Not an open submission portal.
+# Verified 2026-09-03 by fetching each origin HTML (manifest link) and the
+# web app manifest itself. Candidates without a usable manifest / display mode
+# were skipped (for example Starbucks currently omits `display`).
+# Icon and screenshot URLs point at the publishers' own origins / CDNs.
+
+listings:
+  - slug: excalidraw
+    name: Excalidraw
+    icon: https://excalidraw.com/apple-touch-icon.png
+    screenshots:
+      - src: https://excalidraw.com/screenshots/virtual-whiteboard.png
+        alt: Excalidraw virtual whiteboard
+      - src: https://excalidraw.com/screenshots/collaboration.png
+        alt: Excalidraw collaboration session
+    shortCopy: Hand-drawn diagrams in the browser.
+    longCopy: Open-source whiteboard with a hand-drawn look. Ships a standalone web app manifest and works offline after the first visit. Install from Chromium or add to the iOS home screen from Safari.
+    category: productivity
+    originUrl: https://excalidraw.com/
+    publisher: Excalidraw
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Manifest display is standalone. Chromium can prompt on excalidraw.com; iOS uses Share → Add to Home Screen.
+
+  - slug: photopea
+    name: Photopea
+    icon: https://www.photopea.com/promo/icon512.png
+    screenshots:
+      - src: https://www.photopea.com/promo/icon512.png
+        alt: Photopea app icon (the live manifest does not include screenshots)
+    shortCopy: Photoshop-style editor that runs in a tab.
+    longCopy: Browser photo editor with PSD/XCF support. Manifest display is standalone and start_url is the homescreen entry. No screenshots are published in the manifest; the icon is the official 512px asset.
+    category: productivity
+    originUrl: https://www.photopea.com/?utm_source=homescreen
+    publisher: Ivan Kutskir
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Installable on Chromium via beforeinstallprompt on photopea.com. Large documents need a capable device.
+
+  - slug: spotify
+    name: Spotify
+    icon: https://open.spotifycdn.com/cdn/images/icons/Spotify_MWP_512.png
+    screenshots:
+      - src: https://open.spotifycdn.com/cdn/images/download-page-image-mac.fec937cc.png
+        alt: Spotify web player on a desktop
+    shortCopy: Music streaming web player.
+    longCopy: open.spotify.com ships a standalone manifest for the mobile web player. Sign-in is required to play. Install from Chromium on that origin; iOS users add the site from Safari.
+    category: media
+    originUrl: https://open.spotify.com/?utm_source=pwa_install
+    publisher: Spotify
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Manifest is served from Spotify's CDN. Playback and install still require opening open.spotify.com.
+
+  - slug: proxx
+    name: PROXX
+    icon: https://proxx.app/assets/icon-05a70868.png
+    screenshots:
+      - src: https://proxx.app/assets/home-android-58d763a0.webp
+        alt: PROXX home screen with difficulty settings
+      - src: https://proxx.app/assets/ongoing-game-android-1ea0521d.webp
+        alt: PROXX game board in progress
+    shortCopy: Minesweeper-style game built as a PWA.
+    longCopy: Google Chrome Labs proximity game. Manifest display is fullscreen. Playable offline after install. A reference PWA, not a commercial title.
+    category: games
+    originUrl: https://proxx.app/
+    publisher: Google Chrome Labs
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Fullscreen display mode meets Chromium installability. iOS Safari can still add it to the home screen.
+
+  - slug: telegram
+    name: Telegram Web
+    icon: https://web.telegram.org/a/icon-512x512.png
+    screenshots:
+      - src: https://web.telegram.org/a/screenshot.jpg
+        alt: Telegram Web conversation list
+    shortCopy: Telegram's installable web client.
+    longCopy: Cloud messenger at web.telegram.org/a with a standalone manifest. Needs a Telegram account. Install from Chromium on that origin, or Add to Home Screen in iOS Safari.
+    category: social
+    originUrl: https://web.telegram.org/a/
+    publisher: Telegram FZ-LLC
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Confirmed site.webmanifest with display standalone and a published screenshot.
+
+  - slug: pinterest
+    name: Pinterest
+    icon: https://s.pinimg.com/images/favicon_red_192.png
+    screenshots:
+      - src: https://s.pinimg.com/images/facebook_share_image.png
+        alt: Pinterest share image from the publisher CDN
+    shortCopy: Visual bookmarking as a standalone web app.
+    longCopy: pinterest.com exposes a standalone manifest and homescreen start_url. The official web PWA; not the native store listing. Chromium can prompt on pinterest.com.
+    category: social
+    originUrl: https://www.pinterest.com/?utm_source=homescreen_icon
+    publisher: Pinterest
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Manifest display is standalone. The live manifest does not include screenshots; the share image is an official pinimg asset.
+
+  - slug: squoosh
+    name: Squoosh
+    icon: https://squoosh.app/c/icon-large-cb438cac.png
+    screenshots:
+      - src: https://squoosh.app/c/screenshot1-0ff68546.png
+        alt: Squoosh comparing compressed image output
+      - src: https://squoosh.app/c/screenshot4-3a706c3c.png
+        alt: Squoosh desktop comparison view
+    shortCopy: Compress images locally in the browser.
+    longCopy: Google Chrome Labs codec playground. All processing is client-side. Standalone manifest, maskable icon, and published screenshots. A textbook installable PWA.
+    category: utilities
+    originUrl: https://squoosh.app/?utm_medium=PWA&utm_source=launcher
+    publisher: Google Chrome Labs
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: Strong install signals (standalone, 1024px icons, screenshots). Works offline after the first visit.
+
+  - slug: svgomg
+    name: SVGOMG
+    icon: https://jakearchibald.github.io/svgomg/imgs/icon.png
+    screenshots:
+      - src: https://jakearchibald.github.io/svgomg/imgs/icon.png
+        alt: SVGOMG app icon (the live manifest does not include screenshots)
+    shortCopy: SVGO's GUI for minifying SVG files.
+    longCopy: Jake Archibald's SVGO front end. Standalone manifest on GitHub Pages with a service worker. Files never leave the device. The manifest has no screenshots, so the listing uses the official icon.
+    category: utilities
+    originUrl: https://jakearchibald.github.io/svgomg/
+    publisher: Jake Archibald
+    installability:
+      beforeInstallPrompt: true
+      iosA2HS: true
+      desktop: true
+      notes: display standalone and scope ./ . Chromium install works on the GitHub Pages origin.

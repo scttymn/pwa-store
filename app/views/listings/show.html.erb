@@ -1,0 +1,46 @@
+<% content_for :title, "#{@listing.name} — PWA Store" %>
+
+<p><%= link_to "← Catalog", root_path %></p>
+
+<h1><%= @listing.name %></h1>
+<p><img src="<%= @listing.icon %>" alt="<%= @listing.name %> icon" width="64" height="64"></p>
+<p><%= @listing.short_copy %></p>
+<p><%= @listing.long_copy %></p>
+
+<dl>
+  <dt>slug</dt>
+  <dd><%= @listing.slug %></dd>
+  <dt>category</dt>
+  <dd><%= @listing.category %></dd>
+  <dt>publisher</dt>
+  <dd><%= @listing.publisher %></dd>
+  <dt>originUrl</dt>
+  <dd><%= link_to @listing.origin_url, @listing.origin_url, rel: "noopener noreferrer" %></dd>
+  <dt>installability</dt>
+  <dd>
+    beforeInstallPrompt: <%= @listing.installability["beforeInstallPrompt"] %>;
+    iosA2HS: <%= @listing.installability["iosA2HS"] %>;
+    desktop: <%= @listing.installability["desktop"] %>
+    <br>
+    <%= @listing.installability["notes"] %>
+  </dd>
+</dl>
+
+<h2>screenshots</h2>
+<ul>
+  <% @listing.screenshots.each do |shot| %>
+    <li>
+      <img src="<%= shot["src"] %>" alt="<%= shot["alt"] %>" width="240">
+      <div><%= shot["alt"] %></div>
+    </li>
+  <% end %>
+</ul>
+
+<div data-controller="install-guide"
+     data-install-guide-origin-url-value="<%= @listing.origin_url %>"
+     data-install-guide-name-value="<%= @listing.name %>">
+  <p>
+    <button type="button" data-action="install-guide#install">Install</button>
+  </p>
+  <div data-install-guide-target="panel"></div>
+</div>
