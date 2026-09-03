@@ -48,6 +48,19 @@ class ListingTest < ActiveSupport::TestCase
     assert_equal listing.origin_url, listing.originUrl
   end
 
+  test "search is a curated substring match" do
+    hits = Listing.search("draw")
+    assert hits.any? { |listing| listing.slug == "excalidraw" }
+    assert_empty Listing.search("figma")
+    assert_empty Listing.search(" ")
+  end
+
+  test "featured listing and offline collection exist" do
+    assert_equal "excalidraw", Listing.featured.slug
+    assert Listing.featured.works_offline?
+    assert Listing.collections.any? { |collection| collection.id == "offline" }
+  end
+
   private
 
   def valid_payload

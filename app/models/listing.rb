@@ -7,6 +7,13 @@ class Listing
 
   CATEGORIES = %w[productivity media games social utilities other].freeze
   CATALOG_PATH = Rails.root.join("config/listings.yml")
+  FEATURED_SLUG = "excalidraw"
+  FEATURED_HEADLINE = "Drawings that survive airplane mode"
+  SEARCH_SUGGESTIONS = %w[ink maps mail draw image music].freeze
+
+  class CatalogError < StandardError; end
+
+  Collection = Struct.new(:id, :title, :slugs, keyword_init: true)
 
   attribute :slug, :string
   attribute :name, :string
@@ -47,6 +54,45 @@ class Listing
       find(slug) || raise(ActiveRecord::RecordNotFound, "No listing #{slug}")
     end
 
+    def featured
+      find(FEATURED_SLUG) || all.first
+    end
+
+    def featured_headline
+      FEATURED_HEADLINE
+    end
+
+    def in_category(category)
+      return all if category.blank? || category == "all"
+      all.select { |listing| listing.category == category }
+    end
+
+    def grouped_by_category
+      CATEGORIES.each_with_object({}) do |category, groups|
+        items = in_category(category)
+        groups[category] = items if items.any?
+      end
+    end
+
+    def search(query)
+      needle = query.to_s.strip.downcase
+      return [] if needle.empty?
+
+      all.select do |listing|
+        listing.search_blob.include?(needle)
+      end
+    end
+
+    def collections
+      [
+        Collection.new(id: "offline", title: "Apps that work offline", slugs: all.select(&:works_offline?).map(&:slug))
+      ].select { |collection| collection.slugs.any? }
+    end
+
+    def listings_for(slugs)
+      slugs.filter_map { |slug| find(slug) }
+    end
+
     def from_hash(raw)
       new(
         slug: raw.fetch("slug"),
@@ -67,7 +113,31 @@ class Listing
     def load_catalog
       raw = YAML.safe_load_file(CATALOG_PATH)
       Array(raw.fetch("listings")).map { |entry| from_hash(entry) }
+    rescue Errno::ENOENT, Psych::SyntaxError, KeyError => error
+      raise CatalogError, error.message
     end
+  end
+
+  def host
+    URI.parse(origin_url).host
+  rescue URI::InvalidURIError
+    origin_url
+  end
+
+  def curated?
+    true
+  end
+
+  def works_offline?
+    "#{long_copy} #{installability["notes"]}".match?(/offline/i)
+  end
+
+  def category_label
+    category.to_s.titleize
+  end
+
+  def search_blob
+    [ name, short_copy, long_copy, category, category_label, publisher, host ].compact.join(" ").downcase
   end
 
   def to_h

@@ -1,0 +1,55 @@
+<% page_title "Library — PWA Store" %>
+
+<header class="store-header">
+  <div>
+    <h1 class="page-title">Library</h1>
+    <p class="muted">On this device</p>
+  </div>
+  <span class="avatar" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8">
+      <circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.6-3 4-4.5 7-4.5S17.4 16 19 19"/>
+    </svg>
+  </span>
+</header>
+
+<div data-controller="library">
+  <section class="library-layout">
+    <div>
+      <div class="card empty-card" data-library-target="empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <rect x="6" y="6" width="16" height="16" rx="4"/>
+          <rect x="26" y="6" width="16" height="16" rx="4"/>
+          <rect x="6" y="26" width="16" height="16" rx="4"/>
+          <rect x="26" y="26" width="16" height="16" rx="4" stroke-dasharray="3 3"/>
+        </svg>
+        <h2>Nothing on this device yet</h2>
+        <p class="muted">Install an app and it shows up here — and on your Home Screen.</p>
+        <%= link_to "Explore apps", explore_path, class: "btn btn-fill btn-block" %>
+        <%= link_to "How installing works", app_path(Listing.featured.slug), class: "btn-link muted" %>
+      </div>
+
+      <div class="card app-list" data-library-target="installed" hidden>
+        <% @listings.each do |listing| %>
+          <div class="app-row" data-slug="<%= listing.slug %>" hidden>
+            <img class="app-icon" src="<%= listing.icon %>" alt="">
+            <div class="app-row-copy">
+              <h3><%= listing.name %></h3>
+              <p class="signal"><%= listing.works_offline? ? "Works offline" : "On your Home Screen" %></p>
+            </div>
+            <%= link_to "Open", listing.origin_url, class: "btn btn-outline", rel: "noopener noreferrer", target: "_blank" %>
+          </div>
+        <% end %>
+      </div>
+      <p class="caption" data-library-target="summary" hidden></p>
+    </div>
+
+    <aside>
+      <h2 class="section-title">Get these next</h2>
+      <div class="card app-list">
+        <% @next_up.each do |listing| %>
+          <%= render "shared/app_row", listing: listing %>
+        <% end %>
+      </div>
+    </aside>
+  </section>
+</div>

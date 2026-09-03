@@ -214,6 +214,31 @@ export function iosA2HSSteps() {
   ]
 }
 
+export function iosInstallScreens(name = "this app") {
+  return [
+    {
+      step: 1,
+      heading: "Tap Share",
+      body: "Open the Share sheet from Safari — the square with the arrow pointing up."
+    },
+    {
+      step: 2,
+      heading: "Tap Add to Home Screen",
+      body: "Scroll the Share sheet if you need to. Choose Add to Home Screen — not Add Bookmark or Add to Favorites."
+    },
+    {
+      step: 3,
+      heading: "Tap Add, then open it from Home",
+      body: `Edit the name if you want, then tap Add. ${name} appears on your Home Screen. Open it from there — not from this tab.`
+    }
+  ]
+}
+
+export function preferredBrowserLabel(context) {
+  if (context && context.isIOS) return "Safari"
+  return "Chrome"
+}
+
 function browserMenuSteps(context) {
   if (context.browser === "samsung") {
     return [

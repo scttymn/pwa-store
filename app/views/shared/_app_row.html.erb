@@ -1,0 +1,27 @@
+<% listing = local_assigns.fetch(:listing) %>
+<% action = local_assigns.fetch(:action, :install) %>
+<% query = local_assigns[:query] %>
+<div class="app-row" data-slug="<%= listing.slug %>">
+  <%= link_to app_path(listing.slug) do %>
+    <img class="app-icon" src="<%= listing.icon %>" alt="">
+  <% end %>
+  <div class="app-row-copy">
+    <h3><%= link_to highlight_query(listing.name, query), app_path(listing.slug) %></h3>
+    <% if local_assigns[:status].present? %>
+      <p class="signal" data-library-target="status"><%= local_assigns[:status] %></p>
+    <% elsif query.present? && listing.short_copy.downcase.include?(query.downcase) %>
+      <p><%= highlight_query(listing.short_copy, query) %></p>
+    <% else %>
+      <p><%= listing.short_copy %></p>
+    <% end %>
+    <% if listing.curated? && local_assigns[:show_curated] %>
+      <span class="badge badge-teal">Curated</span>
+      <span class="badge badge-muted"><%= listing.category_label %></span>
+    <% end %>
+  </div>
+  <% if action == :open %>
+    <%= link_to "Open", listing.origin_url, class: "btn btn-outline", rel: "noopener noreferrer", target: "_blank", data: { library_target: "open" } %>
+  <% else %>
+    <%= link_to "Install", app_path(listing.slug), class: "btn-text", data: { library_target: "install" } %>
+  <% end %>
+</div>

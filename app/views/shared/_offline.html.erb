@@ -1,0 +1,14 @@
+<div class="offline-root" data-store-target="offline" hidden>
+  <div class="error-state">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <path d="M5 12.5c2.8-3 6.2-4.4 9.5-3.8"/>
+      <path d="M8.2 15.2c1.8-1.8 4-2.6 6.2-2.4"/>
+      <circle cx="12" cy="18.2" r="1"/>
+      <path d="m4 5 16 16"/>
+    </svg>
+    <h1>You’re offline</h1>
+    <p class="muted">The catalog needs a network. Apps you’ve already installed still open from your Home Screen.</p>
+    <button type="button" class="btn btn-fill btn-block" data-action="store#retry">Try again</button>
+    <%= link_to "Open Library", library_path, class: "btn-link" %>
+  </div>
+</div>

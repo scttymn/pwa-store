@@ -1,0 +1,26 @@
+<aside class="store-sidebar">
+  <%= link_to root_path, class: "brand" do %>
+    <span class="brand-kicker">PWA</span>
+    <span class="brand-name">Store</span>
+  <% end %>
+  <nav aria-label="Store">
+    <% store_nav_items.each do |item| %>
+      <%= link_to item[:path], class: ("is-active" if nav_active?(item[:key])) do %>
+        <%= render "shared/nav_icon", name: item[:key] %>
+        <%= item[:name] %>
+      <% end %>
+    <% end %>
+  </nav>
+  <section class="card curated-box">
+    <h2>Curated for you</h2>
+    <% curated_for_you.each do |listing| %>
+      <%= link_to app_path(listing.slug), class: "app-row" do %>
+        <img class="app-icon" src="<%= listing.icon %>" alt="">
+        <div class="app-row-copy">
+          <h3><%= listing.name %></h3>
+          <p><%= listing.category_label %><% if listing.works_offline? %> · Offline<% end %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+</aside>
