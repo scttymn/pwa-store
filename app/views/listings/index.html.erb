@@ -1,0 +1,14 @@
+<% content_for :title, "PWA Store" %>
+
+<h1>PWA Store</h1>
+<p>Curated installable progressive web apps. Not an open submission portal.</p>
+
+<ul>
+  <% @listings.each do |listing| %>
+    <li>
+      <%= link_to listing.name, app_path(listing.slug) %>
+      — <%= listing.short_copy %>
+      <small>[<%= listing.category %>]</small>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,27 @@
+/*
+ * Minimal default styling. Visual direction is out of scope for this spike.
+ */
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 1rem;
+  line-height: 1.45;
+}
+
+main {
+  max-width: 48rem;
+}
+
+nav {
+  margin-bottom: 1rem;
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

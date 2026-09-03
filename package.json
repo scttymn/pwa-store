@@ -1,0 +1,8 @@
+{
+  "name": "pwa-store",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:js": "node --test test/javascript/install_guide.test.mjs"
+  }
+}
