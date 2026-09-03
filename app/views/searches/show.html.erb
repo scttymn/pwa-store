@@ -1,0 +1,41 @@
+<% page_title @query.present? ? "Search “#{@query}” — PWA Store" : "Search — PWA Store" %>
+
+<%= render "shared/search_form", query: @query, show_cancel: true %>
+
+<p class="result-count"><%= @results.size %> <%= "result".pluralize(@results.size) %></p>
+
+<% if @query.present? && @results.empty? %>
+  <section class="card empty-card">
+    <h2>No apps match “<%= @query %>”</h2>
+    <p class="muted">v1 is a curated catalog, not the whole web. Try ink, maps, or mail — or browse Explore.</p>
+    <div class="suggest-chips">
+      <% Listing::SEARCH_SUGGESTIONS.first(3).each do |suggestion| %>
+        <%= link_to suggestion, search_path(q: suggestion), class: "chip" %>
+      <% end %>
+    </div>
+    <%= link_to "Browse Explore", explore_path, class: "btn-text" %>
+  </section>
+<% elsif @results.any? %>
+  <div class="card app-list">
+    <% @results.each do |listing| %>
+      <%= render "shared/app_row", listing: listing, query: @query, show_curated: true %>
+    <% end %>
+  </div>
+<% else %>
+  <p class="muted">Search the curated catalog.</p>
+<% end %>
+
+<% if @collections.any? %>
+  <h2 class="section-title">Collections</h2>
+  <% @collections.each do |collection| %>
+    <div class="card collection-row">
+      <div class="collection-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 12a5 5 0 0 1 8.5-3.5M17 12a5 5 0 0 1-8.5 3.5"/></svg>
+      </div>
+      <div class="app-row-copy">
+        <h3><%= collection.title %></h3>
+        <p><%= Listing.listings_for(collection.slugs).map(&:name).join(", ") %></p>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,56 @@
+<div class="sheet-root" data-install-guide-target="sheet" hidden>
+  <div class="sheet-backdrop" data-action="click->install-guide#close"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="install-sheet-title">
+    <div class="sheet-grabber"></div>
+    <div class="sheet-head">
+      <span id="install-sheet-title">Install <%= listing.name %></span>
+      <span>
+        <span class="sheet-step" data-install-guide-target="stepLabel"></span>
+        <button type="button" class="icon-btn" data-action="install-guide#close" aria-label="Close">×</button>
+      </span>
+    </div>
+
+    <div data-install-guide-target="ios" hidden>
+      <h2 data-install-guide-target="iosHeading"></h2>
+      <p data-install-guide-target="iosBody"></p>
+      <div class="sheet-art" data-install-guide-target="iosArt"></div>
+      <button type="button" class="btn btn-fill btn-block" data-action="install-guide#nextIos" data-install-guide-target="iosNext">Next</button>
+    </div>
+
+    <div data-install-guide-target="android" hidden>
+      <div style="text-align:center">
+        <img class="app-icon lg" src="<%= listing.icon %>" alt="">
+        <h2>Install <%= listing.name %>?</h2>
+        <p class="muted"><%= listing.host %></p>
+        <p>This app will open in its own window and work offline.</p>
+      </div>
+      <div class="sheet-actions">
+        <button type="button" class="btn btn-fill btn-block" data-action="install-guide#confirmAndroid">Install</button>
+        <button type="button" class="btn btn-outline btn-block" data-action="install-guide#close">Not now</button>
+      </div>
+      <p class="sheet-note">Chrome will confirm this on the next step.</p>
+    </div>
+
+    <div data-install-guide-target="desktop" hidden>
+      <div style="text-align:center">
+        <img class="app-icon lg" src="<%= listing.icon %>" alt="">
+        <h2>Install <%= listing.name %>?</h2>
+        <p class="muted"><%= listing.host %></p>
+        <p>Create a shortcut and open in its own window.</p>
+      </div>
+      <div class="sheet-actions">
+        <button type="button" class="btn btn-outline btn-block" data-action="install-guide#close">Cancel</button>
+        <button type="button" class="btn btn-fill btn-block" data-action="install-guide#confirmDesktop">Install</button>
+      </div>
+      <p class="sheet-note">Then pin it to your dock or taskbar.</p>
+    </div>
+
+    <div data-install-guide-target="fallback" hidden>
+      <h2>This browser can’t install apps</h2>
+      <p data-install-guide-target="fallbackBody">Firefox and in-app browsers block Add to Home Screen. Open this listing in Safari (iPhone) or Chrome (Android) to install <%= listing.name %>.</p>
+      <button type="button" class="btn btn-fill btn-block" data-action="install-guide#openPreferred" data-install-guide-target="fallbackOpen">Open in Safari</button>
+      <button type="button" class="btn btn-outline btn-block" data-action="install-guide#copy" style="margin-top:10px">Copy link</button>
+      <p class="sheet-note">We won’t pretend a button here will work.</p>
+    </div>
+  </div>
+</div>

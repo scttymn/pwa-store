@@ -1,46 +1,98 @@
-<% content_for :title, "#{@listing.name} — PWA Store" %>
+<% page_title "#{@listing.name} — PWA Store" %>
+<% content_for :hide_bottom_nav, true %>
 
-<p><%= link_to "← Catalog", root_path %></p>
-
-<h1><%= @listing.name %></h1>
-<p><img src="<%= @listing.icon %>" alt="<%= @listing.name %> icon" width="64" height="64"></p>
-<p><%= @listing.short_copy %></p>
-<p><%= @listing.long_copy %></p>
-
-<dl>
-  <dt>slug</dt>
-  <dd><%= @listing.slug %></dd>
-  <dt>category</dt>
-  <dd><%= @listing.category %></dd>
-  <dt>publisher</dt>
-  <dd><%= @listing.publisher %></dd>
-  <dt>originUrl</dt>
-  <dd><%= link_to @listing.origin_url, @listing.origin_url, rel: "noopener noreferrer" %></dd>
-  <dt>installability</dt>
-  <dd>
-    beforeInstallPrompt: <%= @listing.installability["beforeInstallPrompt"] %>;
-    iosA2HS: <%= @listing.installability["iosA2HS"] %>;
-    desktop: <%= @listing.installability["desktop"] %>
-    <br>
-    <%= @listing.installability["notes"] %>
-  </dd>
-</dl>
-
-<h2>screenshots</h2>
-<ul>
-  <% @listing.screenshots.each do |shot| %>
-    <li>
-      <img src="<%= shot["src"] %>" alt="<%= shot["alt"] %>" width="240">
-      <div><%= shot["alt"] %></div>
-    </li>
+<header class="listing-top">
+  <%= link_to root_path, class: "icon-btn", aria: { label: "Back" } do %>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m14 6-7 6 7 6"/></svg>
   <% end %>
-</ul>
+  <button type="button" class="icon-btn" data-action="listing#share" aria-label="Share">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 14V4"/><path d="m8 8 4-4 4 4"/><path d="M5 14v5h14v-5"/>
+    </svg>
+  </button>
+</header>
 
-<div data-controller="install-guide"
-     data-install-guide-origin-url-value="<%= @listing.origin_url %>"
-     data-install-guide-name-value="<%= @listing.name %>">
-  <p>
-    <button type="button" data-action="install-guide#install">Install</button>
-  </p>
-  <div data-install-guide-target="panel"></div>
-</div>
+<article class="listing-page"
+         data-controller="listing install-guide"
+         data-listing-origin-down-value="<%= @origin_down %>"
+         data-listing-slug-value="<%= @listing.slug %>"
+         data-install-guide-origin-url-value="<%= @listing.origin_url %>"
+         data-install-guide-name-value="<%= @listing.name %>"
+         data-install-guide-slug-value="<%= @listing.slug %>"
+         data-install-guide-icon-value="<%= @listing.icon %>"
+         data-install-guide-host-value="<%= @listing.host %>">
+  <header class="listing-hero">
+    <img class="app-icon lg" src="<%= @listing.icon %>" alt="<%= @listing.name %> icon" data-listing-target="icon">
+    <h1><%= @listing.name %></h1>
+    <p class="muted"><%= @listing.publisher %></p>
+    <div class="badge-row">
+      <span class="badge badge-teal">Curated</span>
+      <span class="badge badge-muted"><%= @listing.category_label %></span>
+    </div>
+  </header>
+
+  <div class="install-block" data-install-guide-target="cta">
+    <button type="button" class="btn btn-fill btn-block" data-action="install-guide#install" data-install-guide-target="installButton">Install</button>
+    <p class="caption" data-install-guide-target="caption"><%= install_caption(@listing) %></p>
+    <div class="home-status" data-install-guide-target="installed" hidden>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>
+      On your Home Screen
+    </div>
+    <button type="button" class="btn-link muted" data-action="install-guide#install" hidden data-install-guide-target="help">Installation help</button>
+  </div>
+
+  <div class="feature-tiles">
+    <div class="feature-tile">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2"/></svg>
+      Opens as an app
+    </div>
+    <div class="feature-tile">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 12a5 5 0 0 1 8.5-3.5M17 12a5 5 0 0 1-8.5 3.5"/></svg>
+      Works offline
+    </div>
+    <div class="feature-tile">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 19c1.4-3 3.6-4.5 7-4.5"/><path d="m16 14 4 4M20 14l-4 4"/></svg>
+      No account needed
+    </div>
+  </div>
+
+  <div class="warning-card card" data-listing-target="originDown" <%= @origin_down ? "" : "hidden" %>>
+    <div class="warning-mark">!</div>
+    <div>
+      <strong><%= @listing.name %> isn’t responding.</strong>
+      <p class="muted">Install still works — you’ll open it later.</p>
+    </div>
+  </div>
+
+  <div class="shot-rail">
+    <% @listing.screenshots.each do |shot| %>
+      <img src="<%= shot["src"] %>" alt="<%= shot["alt"] %>">
+    <% end %>
+  </div>
+
+  <section class="about">
+    <h2>About</h2>
+    <p><%= @listing.long_copy %></p>
+  </section>
+
+  <section class="info">
+    <h2>Information</h2>
+    <dl>
+      <div class="info-row">
+        <dt>Category</dt>
+        <dd><%= @listing.category_label %></dd>
+      </div>
+      <div class="info-row">
+        <dt>Publisher</dt>
+        <dd><%= @listing.publisher %></dd>
+      </div>
+      <div class="info-row">
+        <dt>Site</dt>
+        <dd><%= link_to @listing.host, @listing.origin_url, rel: "noopener noreferrer" %></dd>
+      </div>
+    </dl>
+  </section>
+
+  <div data-install-guide-target="panel" hidden></div>
+  <%= render "shared/install_sheet", listing: @listing %>
+</article>

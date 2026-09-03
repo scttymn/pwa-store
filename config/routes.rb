@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   root "listings#index"
   get "apps/:slug", to: "listings#show", as: :app
+  get "explore", to: "explores#show", as: :explore
+  get "search", to: "searches#show", as: :search
+  get "library", to: "libraries#show", as: :library
   get "install-demo", to: "install_demos#show", as: :install_demo
   get "spike", to: "install_demos#show"
 end

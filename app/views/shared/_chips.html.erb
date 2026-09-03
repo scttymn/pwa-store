@@ -1,0 +1,9 @@
+<% active = local_assigns.fetch(:active, "all") %>
+<% path = local_assigns.fetch(:path, root_path) %>
+<div class="chips" role="tablist" aria-label="Categories">
+  <% category_chips.each do |category| %>
+    <%= link_to category_label(category),
+          path == explore_path ? explore_path(category: category) : root_path(category: category),
+          class: [ "chip", ("is-active" if active == category) ] %>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+<nav class="bottom-nav" aria-label="Store">
+  <% store_nav_items.each do |item| %>
+    <%= link_to item[:path], class: ("is-active" if nav_active?(item[:key])) do %>
+      <%= render "shared/nav_icon", name: item[:key] %>
+      <span><%= item[:name] %></span>
+    <% end %>
+  <% end %>
+</nav>

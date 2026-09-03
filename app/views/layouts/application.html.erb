@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "PWA Store" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="PWA Store">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#F4F1EA">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -16,20 +17,27 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header>
-      <nav>
-        <%= link_to "PWA Store", root_path %>
-        · <%= link_to "Install demo", install_demo_path %>
-      </nav>
-    </header>
-    <main>
-      <%= yield %>
-    </main>
+  <body data-controller="store"
+        data-store-offline-value="false">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="store-shell">
+      <%= render "shared/sidebar" %>
+      <div class="store-frame">
+        <main id="main" class="main">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+    <%= render "shared/bottom_nav" unless content_for?(:hide_bottom_nav) %>
+    <%= render "shared/offline" %>
+    <%= yield :sheets %>
   </body>
 </html>

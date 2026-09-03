@@ -1,0 +1,21 @@
+<% query = local_assigns.fetch(:query, params[:q]) %>
+<% show_cancel = local_assigns.fetch(:show_cancel, false) %>
+<form class="search-form" action="<%= search_path %>" method="get" role="search">
+  <label class="search-bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+    </svg>
+    <input type="search" name="q" value="<%= query %>" placeholder="Search apps" autocomplete="off">
+    <% if query.present? %>
+      <button type="button" class="btn-text" data-action="store#clearSearch" aria-label="Clear search">×</button>
+    <% end %>
+  </label>
+  <% if show_cancel %>
+    <%= link_to "Cancel", explore_path, class: "search-cancel" %>
+  <% end %>
+  <span class="avatar header-avatar-mobile" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8">
+      <circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.6-3 4-4.5 7-4.5S17.4 16 19 19"/>
+    </svg>
+  </span>
+</form>

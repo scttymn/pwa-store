@@ -2,7 +2,7 @@
 
 A public catalog of installable [progressive web apps](https://web.dev/progressive-web-apps/). The store itself is a PWA. There are no native apps, no publisher login, and no open submission form. v1 is a curated list.
 
-This is a functional spike on Rails 8 + Hotwire. Visual design is intentionally default.
+Rails 8 + Hotwire + vanilla JS. Editorial UI matches `docs/design/` (Inter + Instrument Serif, canvas `#F4F1EA`, black Install, teal only for Curated / installed / offline).
 
 ## Run locally
 
@@ -16,9 +16,14 @@ bin/dev
 
 `bin/dev` is `bin/rails server` (no CSS/JS bundler). Open:
 
-- `/` — catalog index (name, short copy, category)
-- `/apps/:slug` — listing detail + Install
+- `/` — Home (featured + category rails)
+- `/explore` — discovery and collections
+- `/search?q=` — honest curated search
+- `/library` — on-device apps (localStorage) + Get these next
+- `/apps/:slug` — listing + guided install
 - `/install-demo` (also `/spike`) — dumps `detectInstallContext()` as JSON
+
+Error states: `/?force=catalog` (catalog copy failed), client offline overlay (store has no network), `/apps/:slug?origin_down=1` (origin down, Install still works).
 
 Tests:
 

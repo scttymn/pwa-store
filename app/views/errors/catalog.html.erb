@@ -1,0 +1,24 @@
+<% page_title "Catalog error — PWA Store" %>
+
+<header class="store-header mobile-brand">
+  <div class="brand">
+    <span class="brand-kicker">PWA</span>
+    <span class="brand-name">Store</span>
+  </div>
+  <span class="avatar" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8">
+      <circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.6-3 4-4.5 7-4.5S17.4 16 19 19"/>
+    </svg>
+  </span>
+</header>
+
+<div class="error-state">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+    <rect x="5" y="4" width="14" height="16" rx="2"/>
+    <path d="M8 9h8M8 13h5"/>
+  </svg>
+  <h1>Couldn’t load the catalog</h1>
+  <p class="muted">The store is up, this copy of the list isn’t. Try again. Your installed apps are fine.</p>
+  <%= link_to "Try again", request.path, class: "btn btn-fill btn-block" %>
+  <%= link_to "Open Library", library_path, class: "btn-link" %>
+</div>

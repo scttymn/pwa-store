@@ -1,5 +1,5 @@
 const CACHE = "pwa-store-v1"
-const PRECACHE = ["/", "/manifest.json"]
+const PRECACHE = ["/", "/explore", "/library", "/search", "/manifest.json"]
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
