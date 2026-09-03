@@ -16,11 +16,17 @@ export default class extends Controller {
 
   connect() {
     this.unlisten = listenForBeforeInstallPrompt()
-    if (this.hasOutputTarget) this.dump()
+    this.refresh = () => { if (this.hasOutputTarget) this.dump() }
+    window.addEventListener("beforeinstallprompt", this.refresh)
+    this.refresh()
+    // BIP often arrives after first paint; refresh so /install-demo is honest on devices.
+    this.timer = window.setTimeout(this.refresh, 1500)
   }
 
   disconnect() {
     if (this.unlisten) this.unlisten()
+    window.removeEventListener("beforeinstallprompt", this.refresh)
+    if (this.timer) window.clearTimeout(this.timer)
   }
 
   dump() {
